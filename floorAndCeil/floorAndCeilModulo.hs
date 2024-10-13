@@ -1,3 +1,5 @@
+module AlunosModule where
+
 -- Find the floor and the ceil from a number x inside from an array a. The number x may not be on the array a.
 -- THe floor
 
