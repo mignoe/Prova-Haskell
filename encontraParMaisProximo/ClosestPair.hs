@@ -2,8 +2,8 @@
  
 closestPair [] _ = error "At least two numbers are needed!"
 closestPair [_] _ = error "At least two numbers are needed!"
-closestPair ls x = show a ++ " and " ++ show b
-    where (_, (a, b)) = closestPairAux ls x
+closestPair lista x = show a ++ " and " ++ show b
+    where (_, (a, b)) = closestPairAux lista x
 
 
 closestPairAux [a, b] x = (abs (x - (a + b)), (a, b))
