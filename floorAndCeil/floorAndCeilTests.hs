@@ -122,8 +122,10 @@ test6FloorAndCeil = do
 main = do
     test1Floor
     test2Floor
+
     test1Ceil
     test2Ceil
+    
     test1FloorAndCeil
     test2FloorAndCeil
     test3FloorAndCeil
