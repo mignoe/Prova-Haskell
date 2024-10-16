@@ -1,5 +1,6 @@
 
 import AlunosModule
+import Control.Exception (try, evaluate, SomeException)
 
 
 alunos = [ Matricula "12111999" (PrimeiroNome "João") (SegundoNome "Silva") (PeriodoEntrada "2020.1") (CRA 8.5)
@@ -53,10 +54,80 @@ test3Group = do
             ]   
     assert testCase expectedResult alunosAgrupados 
 
+test4Group = do
+    let testCase = "Grupo de lista com alunos com mesmo cra"
+    let alunos = [ Matricula "12111999" (PrimeiroNome "João") (SegundoNome "Silva") (PeriodoEntrada "2020.1") (CRA 8.5)
+                    , Matricula "12119443" (PrimeiroNome "Miguel") (SegundoNome "Rodrigues") (PeriodoEntrada "2021.1") (CRA 8.5)
+                    , Matricula "12199423" (PrimeiroNome "Rodrigues") (SegundoNome "Miguel") (PeriodoEntrada "2019.2") (CRA 8.5)
+                    , Matricula "12210099" (PrimeiroNome "Maria") (SegundoNome "Souza") (PeriodoEntrada "2021.1") (CRA 8.5)
+                    ]
+    let alunosAgrupados = groupByCRA alunos
+    -- todos os alunos estarão na primeira e única tupla
+    let expectedResult = [
+          (8.5, [ Matricula "12111999" (PrimeiroNome "João") (SegundoNome "Silva") (PeriodoEntrada "2020.1") (CRA 8.5)
+                    , Matricula "12119443" (PrimeiroNome "Miguel") (SegundoNome "Rodrigues") (PeriodoEntrada "2021.1") (CRA 8.5)
+                    , Matricula "12199423" (PrimeiroNome "Rodrigues") (SegundoNome "Miguel") (PeriodoEntrada "2019.2") (CRA 8.5)
+                    , Matricula "12210099" (PrimeiroNome "Maria") (SegundoNome "Souza") (PeriodoEntrada "2021.1") (CRA 8.5)
+                    ])
+            ]   
+
+    assert testCase expectedResult alunosAgrupados 
+
+test1Media = do
+
+    let testCase = "Media de lista vazia"
+    let alunos = []
+
+    -- Catch error
+    errorResult <- try (evaluate (mediaCRAs alunos)) :: IO (Either SomeException Float)
+
+    case errorResult of
+        Left _  -> assert testCase True True  -- Esperando um erro
+        Right _ -> assert testCase False True  -- Não deve alcançar esse código
+
+test2Media = do
+    let testCase = "Media de lista com um aluno"
+    let alunos = [Matricula "12111999" (PrimeiroNome "João") (SegundoNome "Silva") (PeriodoEntrada "2020.1") (CRA 8.5)]
+    let result = mediaCRAs alunos
+    let expectedResult = 8.5
+
+    assert testCase expectedResult result
+
+
+test3Media = do
+    let testCase = "Media de lista com vários alunos"
+
+    -- alunos está definido no início deste arquivo
+    let result = mediaCRAs alunos
+    let expectedResult = 7.7461543
+
+    assert testCase expectedResult result
+
+
+test4Media = do
+    let testCase = "Media de lista com alunos com mesmo cra"
+    let alunos = [ Matricula "12111999" (PrimeiroNome "João") (SegundoNome "Silva") (PeriodoEntrada "2020.1") (CRA 8.5)
+                    , Matricula "12119443" (PrimeiroNome "Miguel") (SegundoNome "Rodrigues") (PeriodoEntrada "2021.1") (CRA 8.5)
+                    , Matricula "12199423" (PrimeiroNome "Rodrigues") (SegundoNome "Miguel") (PeriodoEntrada "2019.2") (CRA 8.5)
+                    , Matricula "12210099" (PrimeiroNome "Maria") (SegundoNome "Souza") (PeriodoEntrada "2021.1") (CRA 8.5)
+                    ]
+    -- alunos está definido no início deste arquivo
+    let result = mediaCRAs alunos
+    let expectedResult = 8.5
+
+    assert testCase expectedResult result
+
+
 
 main :: IO ()
 main = do
-    test1
-    test2
-    test3
+    test1Group
+    test2Group
+    test3Group
+    test4Group
+
+    test1Media
+    test2Media
+    test3Media
+    test4Media
     

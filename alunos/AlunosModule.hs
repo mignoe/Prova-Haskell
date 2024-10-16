@@ -8,10 +8,9 @@ data PeriodoEntrada = PeriodoEntrada String deriving(Eq, Show)
 data Aluno = Matricula String PrimeiroNome SegundoNome PeriodoEntrada CRA deriving(Eq, Show)
 
 
-nomeCompleto (Matricula _ (PrimeiroNome nome) (SegundoNome sobreNome) _ _) = nome ++ " " ++ sobreNome
 getCRA (Matricula _ _ _ _ (CRA cra)) = cra
 
-
+mediaCRAs [] = error "empty list"
 mediaCRAs alunos = (foldr (\aluno acc-> getCRA aluno + acc) 0 alunos) / fromIntegral len
                 where len = length alunos
 
