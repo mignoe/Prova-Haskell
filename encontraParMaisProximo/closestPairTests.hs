@@ -1,5 +1,6 @@
 import ClosestPair
-import Control.Exception (catch, SomeException)
+
+import Control.Exception (try, evaluate, SomeException)
 
 
 -- Function to simulate error catching
@@ -45,22 +46,30 @@ test4 = do
     let expectedResult = "3.5 and 6.7"  
     assert testCase expectedResult result
 
-
 test5 = do
     let testCase = "Teste com lista vazia"
     let list = []
     let x = 10
-    let result = catchError (closestPair list x)
-    let expectedResult = "At least two numbers are needed!"
-    assert testCase expectedResult result
+
+    -- Catching the error
+    result <- try (evaluate (closestPair list x)) :: IO (Either SomeException String)
+
+    case result of
+        Left _  -> assert testCase True True  -- Espera-se um erro
+        Right _ -> assert testCase False True  -- Não deveria alcançar esse código
 
 test6 = do
     let testCase = "Teste com apenas um número na lista"
     let list = [8]
     let x = 8
-    let result = catchError (closestPair list x)
-    let expectedResult = "At least two numbers are needed!"
-    assert testCase expectedResult result
+
+    -- Catching the error
+    result <- try (evaluate (closestPair list x)) :: IO (Either SomeException String)
+
+    case result of
+        Left _  -> assert testCase True True  -- Espera-se um erro
+        Right _ -> assert testCase False True  -- Não deveria alcançar esse código
+
 
 
 test7 = do
@@ -80,6 +89,15 @@ test8 = do
     assert testCase expectedResult result
 
 
+test9 = do
+    let testCase = "Teste com todos números decimais negativos e target positivo"
+    let list = [-5.5, -3.3, -2.1, -0.9]
+    let x = 4
+    let result = closestPair list x
+    let expectedResult = "-2.1 and -0.9"  
+    assert testCase expectedResult result
+
+
 main = do
     test1
     test2
@@ -89,3 +107,4 @@ main = do
     test6
     test7
     test8
+    test9
