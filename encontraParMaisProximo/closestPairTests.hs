@@ -98,6 +98,23 @@ test9 = do
     assert testCase expectedResult result
 
 
+test10 = do
+    let testCase = "Teste com todos números decimais positivos e target negativo"
+    let list = [0.9, 2.1, 3.3, 5.5]
+    let x = -4
+    let result = closestPair list x
+    let expectedResult = "0.9 and 2.1"  
+    assert testCase expectedResult result
+
+test11 = do
+    let testCase = "Teste com números mistos"
+    let list = [-10, -4.5, 2, 4.5, 34]
+    let x = 0
+    let result = closestPair list x
+    let expectedResult = "-4.5 and 4.5"  
+    assert testCase expectedResult result
+
+
 main = do
     test1
     test2
@@ -108,3 +125,5 @@ main = do
     test7
     test8
     test9
+    test10
+    test11
