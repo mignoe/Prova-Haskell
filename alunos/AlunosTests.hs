@@ -23,21 +23,21 @@ assert testCase expected actual
     | otherwise = putStrLn ("\nTest case: " ++ testCase ++ " failed!\n  - expected " ++ show(expected) ++ "\n  - actual " ++ show(actual) ++ "\n" )
 
 
-test1 = do
+test1Group = do
     let testCase = "Group de um aluno"
     let alunos = [Matricula "12111999" (PrimeiroNome "João") (SegundoNome "Silva") (PeriodoEntrada "2020.1") (CRA 8.5)]
     let alunosAgrupados = groupByCRA alunos
     let expectedResult = [(8.5, [Matricula "12111999" (PrimeiroNome "João") (SegundoNome "Silva") (PeriodoEntrada "2020.1") (CRA 8.5)])]
     assert testCase expectedResult alunosAgrupados
 
-test2 = do
+test2Group = do
     let testCase = "Group de lista vazia"
     let alunos = []
     let alunosAgrupados = groupByCRA alunos
     let expectedResult = []
     assert testCase expectedResult alunosAgrupados
 
-test3 = do
+test3Group = do
     let testCase = "Group de poucos alunos"
     let alunos = [ Matricula "12111999" (PrimeiroNome "João") (SegundoNome "Silva") (PeriodoEntrada "2020.1") (CRA 8.5)
                     , Matricula "12119443" (PrimeiroNome "Miguel") (SegundoNome "Rodrigues") (PeriodoEntrada "2021.1") (CRA 0)

@@ -77,6 +77,46 @@ test3FloorAndCeil = do
     assert (testCase ++ " - Floor") expectedFloorResult floorResult
     assert (testCase ++ " - Ceil") expectedCeilResult ceilResult
 
+test4FloorAndCeil = do
+    let testCase = "Floor e Ceil em lista com um único número negativo"
+    let lista = [-5]  
+    let num = 0
+    let floorResult = myFloor num lista
+    let ceilResult = myCeil num lista
+    let expectedFloorResult = Just (-5)  
+    let expectedCeilResult = Nothing      
+
+    assert (testCase ++ " - Floor") expectedFloorResult floorResult
+    assert (testCase ++ " - Ceil") expectedCeilResult ceilResult
+
+
+test5FloorAndCeil = do
+    let testCase = "Floor e Ceil em lista com um único número positivo"
+    let lista = [5]  -- Lista com apenas um número
+    let num = 0
+    let floorResult = myFloor num lista
+    let ceilResult = myCeil num lista
+    let expectedFloorResult = Nothing  -- O maior número menor que 0 é -5
+    let expectedCeilResult = Just 5      -- Não há número maior que 0 na lista
+
+    assert (testCase ++ " - Floor") expectedFloorResult floorResult
+    assert (testCase ++ " - Ceil") expectedCeilResult ceilResult
+
+
+test6FloorAndCeil = do
+    let testCase = "Floor e Ceil em lista com um único número igual ao target"
+    let lista = [0]  -- Lista com apenas um número
+    let num = 0
+    let floorResult = myFloor num lista
+    let ceilResult = myCeil num lista
+    let expectedFloorResult = Nothing  -- O maior número menor que 0 é -5
+    let expectedCeilResult = Nothing      -- Não há número maior que 0 na lista
+
+    assert (testCase ++ " - Floor") expectedFloorResult floorResult
+    assert (testCase ++ " - Ceil") expectedCeilResult ceilResult
+
+
+
 
 
 main = do
@@ -87,3 +127,6 @@ main = do
     test1FloorAndCeil
     test2FloorAndCeil
     test3FloorAndCeil
+    test4FloorAndCeil
+    test5FloorAndCeil
+    test6FloorAndCeil
